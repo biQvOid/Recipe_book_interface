@@ -1,3 +1,4 @@
+
 from tkinter import Tk, Text, BOTH, W, N, E, S, END, messagebox
 from tkinter.ttk import Frame, Button, Label, Entry, Style
 import sqlite3 as sq
@@ -18,7 +19,8 @@ class Example(Frame):
         lbl.grid(row=1, column=0, columnspan=1, rowspan=1, padx=5)
         lbl_satus = Label(self, text="")
         lbl_satus.grid(row=5, column=0, columnspan=1, rowspan=1, padx=5)
-
+        namedeletelbl = Label(self, text="Введите название рецепта")
+        namedeletelbl.grid(row=2, column=1, columnspan=1, rowspan=1, padx=5, sticky=E + W + S + N)
         field = Entry(self, width=20)
         field.grid(row=2, column=0, columnspan=1, rowspan=1, padx=5)
 
@@ -36,6 +38,7 @@ class Example(Frame):
             deleting.grid_remove()
             closing.grid_remove()
             lbl_satus.grid_remove()
+            namedeletelbl.grid_remove()
 
         deleting = Button(self, text="Удалить", command=deleting)
         deleting.grid(row=3, column=0, columnspan=1, rowspan=1, padx=5, sticky=E + W + S + N)
@@ -65,7 +68,7 @@ class Example(Frame):
 
             search_recipes = txt.get()
             sql = "select recipe from book_of_recipes where recipe_name like '"+ search_recipes + "%' "
-            print(sql)
+            #print(sql)
             cur.execute(sql)
             for row in cur.fetchall():
                 field.insert(END, row[0])
@@ -129,6 +132,12 @@ class Example(Frame):
         recipe.grid(row=2, column=0, columnspan=1, rowspan=1, padx=5, sticky=E + W + S + N)
         products = Text(self, width=20, height=1)
         products.grid(row=3, column=0, columnspan=1, rowspan=1, padx=5, sticky=E + W + S + N)
+        namelbl = Label(self, text="Введите название рецепта")
+        namelbl.grid(row=1, column=1, columnspan=1, rowspan=1, padx=5, sticky=E + W + S + N)
+        recipelbl = Label(self, text="Введите рецепт")
+        recipelbl.grid(row=2, column=1, columnspan=1, rowspan=1, padx=5, sticky=E + W + S + N)
+        productslbl = Label(self, text="Введите продукты")
+        productslbl.grid(row=3, column=1, columnspan=1, rowspan=1, padx=5, sticky=E + W + S + N)
 
         def is_full_text():  # функция, проверяющая пустое ли поле ввода: если оно пустое, программа не будет добавлять поля в БД(удобно)
             if (len(name_of_recipe.get('1.0', 'end')) > 1) and (len(recipe.get('1.0', 'end')) > 1) and (
@@ -153,6 +162,9 @@ class Example(Frame):
             products.grid_remove()
             to_close.grid_remove()
             to_add.grid_remove()
+            namelbl.grid_remove()
+            recipelbl.grid_remove()
+            productslbl.grid_remove()
 
         to_close = Button(self, text="Закрыть", command=close_add_recipe)
         to_close.grid(row=7, column=0, columnspan=1, rowspan=1, padx=5, sticky=E + W + S + N)
